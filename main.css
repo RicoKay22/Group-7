@@ -3,7 +3,7 @@
    Replace with exact hex values from Figma (Inspect panel). */
 :root,
 [data-theme="light"] {
-    --color-bg: #f4f8ff;
+    --color-bg:#f6f8ff;
     --color-surface: #ffffff;
     --color-surface-alt: #f1f5fc;
     --color-text: #1b2a4a;
@@ -22,7 +22,7 @@
 }
 
 [data-theme="dark"] {
-    --color-bg: #121c36;
+    --color-bg: #141d2f;
     --color-surface: #1b2a4d;
     --color-surface-alt: #101a33;
     --color-text: #ffffff;
@@ -44,7 +44,7 @@
     --font-body: "Space Mono", ui-monospace, monospace;
     --font-heading: "Inter", system-ui, sans-serif;
     --radius: 12px;
-    --container-max: 45rem;
+    --container-max: 778px; /* 730px content + 2x24px padding */
     --space: 1.5rem;
 }
 
@@ -136,3 +136,6 @@ main > section { margin-block: var(--space); }
 
 
 /* ===== [feature/responsive] ===== */
+
+
+
