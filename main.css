@@ -35,3 +35,144 @@ a {
 .highlight {
   background: var(--accent-color);
 }
+/* ===== THEME VARIABLES =====
+   Colours are approximated from the Figma preview.
+   Replace with exact hex values from Figma (Inspect panel). */
+:root,
+[data-theme="light"] {
+    --color-bg:#f6f8ff;
+    --color-surface: #ffffff;
+    --color-surface-alt: #f1f5fc;
+    --color-text: #1b2a4a;
+    --color-text-muted: #7a8bad;
+    --color-heading: #1d4ed8;
+    --color-primary: #0a84ff;
+    --color-primary-hover: #5aaeff;
+    --color-border: #dbe4f5;
+    --color-error: #e5484d;
+    --color-table-head: #1d4ed8;
+    --color-table-head-text: #ffffff;
+    --color-table-group: #e4ecfb;
+    --color-table-cell: #ffffff;
+    --color-table-text: #1b2a4a;
+    --shadow-card: 0 4px 16px rgba(29, 78, 216, 0.08);
+}
+
+[data-theme="dark"] {
+    --color-bg: #141d2f;
+    --color-surface: #1b2a4d;
+    --color-surface-alt: #101a33;
+    --color-text: #ffffff;
+    --color-text-muted: #8fa3c8;
+    --color-heading: #ffffff;
+    --color-primary: #0a84ff;
+    --color-primary-hover: #5aaeff;
+    --color-border: #2a3b66;
+    --color-error: #ff6b70;
+    --color-table-head: #1d4ed8;
+    --color-table-head-text: #ffffff;
+    --color-table-group: #8ea3d6;
+    --color-table-cell: #f3f6fc;
+    --color-table-text: #1b2a4a;
+    --shadow-card: none;
+}
+
+:root {
+    --font-body: "Space Mono", ui-monospace, monospace;
+    --font-heading: "Inter", system-ui, sans-serif;
+    --radius: 12px;
+    --container-max: 778px; /* 730px content + 2x24px padding */
+    --space: 1.5rem;
+}
+
+/* ===== RESET & BASE ===== */
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+    margin: 0;
+    font-family: var(--font-body);
+    font-size: 0.875rem;
+    line-height: 1.6;
+    color: var(--color-text);
+    background: var(--color-bg);
+    transition: background-color 0.2s, color 0.2s;
+}
+
+img { max-width: 100%; display: block; }
+h1, h2, h3 { font-family: var(--font-heading); line-height: 1.2; }
+button, input { font: inherit; }
+
+:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+}
+
+/* ===== LAYOUT HELPERS ===== */
+.container {
+    width: 100%;
+    max-width: var(--container-max);
+    margin-inline: auto;
+    padding-inline: var(--space);
+}
+
+main > section { margin-block: var(--space); }
+
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+}
+
+.skip-link {
+    position: absolute;
+    left: 1rem;
+    top: -4rem;
+    padding: 0.5rem 1rem;
+    background: var(--color-primary);
+    color: #fff;
+    border-radius: 6px;
+}
+.skip-link:focus { top: 1rem; }
+
+.status { text-align: center; color: var(--color-text-muted); }
+.status--error { color: var(--color-error); }
+
+.table-wrapper { overflow-x: auto; }
+
+/* ===== [feature/header-search] ===== */
+.site-header__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-block: var(--space);
+}
+.logo {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    color: var(--color-text);
+    text-decoration: none;
+}
+
+
+/* ===== [feature/planet-card] ===== */
+
+
+/* ===== [feature/facts-table] ===== */
+
+
+/* ===== [feature/theme-toggle] ===== */
+
+
+/* ===== [feature/search-logic] ===== */
+
+
+/* ===== [feature/footer] ===== */
+
+
+/* ===== [feature/responsive] ===== */
+
+
+

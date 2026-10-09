@@ -1,14 +1,62 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <meta name="author" content="group 7 Hajime TS Capstone Project.">
+    <meta name="description" content="Planet: search the planets of our solar system and compare their key facts.">
+    <title>Planet | Solar System Facts</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="main.css">
+    <script src="script.js" defer></script>
 </head>
 <body>
-    <div id="theme-toggle-slot">
-  <button id="theme-toggle" aria-pressed="false"></button>
-</div>
+    <a class="skip-link" href="#main">Skip to main content</a>
+
+    <header class="site-header" id="site-header">
+        <div class="container site-header__inner">
+
+            <!-- [feature/header-search] Replace the logo text with the logo image, add the theme toggle button -->
+           
+            <a class="logo" href="./">planet</a>
+            <div id="theme-toggle-slot"></div>
+        </div>
+    </header>
+
+    <main id="main" class="container">
+        <section id="search-section" aria-label="Search planets">
+
+            <!-- [feature/header-search] Search form goes here -->
+        
+        </section>
+
+        <section id="planet-details" aria-label="Planet details" aria-live="polite">
+            <p id="planet-status" class="status">Loading planets…</p>
+
+            <!-- [feature/planet-card] Planet card renders here -->
+        
+        </section>
+
+        <section id="facts-section" aria-labelledby="facts-title">
+            <h2 id="facts-title">Planetary Facts at a Glance</h2>
+            <p>Below is a comparative table of major planets in our solar system. The data highlights key physical properties used by astronomers and researchers worldwide.</p>
+            <div id="facts-table-container" class="table-wrapper">
+
+                <!-- [feature/facts-table] Table renders here -->
+            
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer" id="site-footer">
+        <div class="container">
+
+            <!-- [feature/footer] About text and links go here -->
+        
+
+            
+        </div>
+    </footer>
 </body>
 </html>
