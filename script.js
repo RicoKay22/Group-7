@@ -140,9 +140,15 @@ const cardIcons = {
 function mountPlanetCard(card) {
     const existingCard = planetDetailsEl.querySelector("#planet-card");
     if (existingCard) {
+<<<<<<< HEAD
         existingCard.replaceWith(card);
     } else {
         planetDetailsEl.appendChild(card);
+=======
+      existingCard.replaceWith(card);
+    } else {
+      planetDetailsEl.appendChild(card);
+>>>>>>> main
     }
 }
 
@@ -155,6 +161,7 @@ function renderPlanetCard(planet) {
     // Static structure only. Data is inserted with textContent below.
     card.innerHTML = `
         <figure class="planet-card__figure">
+<<<<<<< HEAD
             <img class="planet-card__image" data-img width="116" height="116">
         </figure>
         <div class="planet-card__title">
@@ -172,6 +179,25 @@ function renderPlanetCard(planet) {
             <li>${cardIcons.moons}<span class="visually-hidden">Moons: </span><span data-field="moons"></span></li>
             <li>${cardIcons.diameter}<span class="visually-hidden">Diameter in kilometres: </span><span data-field="diameter"></span></li>
             <li>${cardIcons.distance}<span class="visually-hidden">Distance from the Sun in million kilometres: </span><span data-field="distanceFromSun"></span></li>
+=======
+          <img class="planet-card__image" data-img width="116" height="116">
+        </figure>
+        <div class="planet-card__title">
+          <h3 id="planet-card-name" data-field="name"></h3>
+          <p class="planet-card__type" data-field="type"></p>
+        </div>
+        <p class="planet-card__description" data-field="description"></p>
+        <dl class="planet-card__stats">
+          <div><dt>Gravity</dt><dd data-field="gravity"></dd></div>
+          <div><dt>Mass</dt><dd data-field="mass"></dd></div>
+          <div><dt>Period</dt><dd data-field="period"></dd></div>
+        </dl>
+        <ul class="planet-card__facts">
+          <li>${cardIcons.temperature}<span class="visually-hidden">Temperature in kelvin: </span><span data-field="temperature"></span></li>
+          <li>${cardIcons.moons}<span class="visually-hidden">Moons: </span><span data-field="moons"></span></li>
+          <li>${cardIcons.diameter}<span class="visually-hidden">Diameter in kilometres: </span><span data-field="diameter"></span></li>
+          <li>${cardIcons.distance}<span class="visually-hidden">Distance from the Sun in million kilometres: </span><span data-field="distanceFromSun"></span></li>
+>>>>>>> main
         </ul>
     `;
 
