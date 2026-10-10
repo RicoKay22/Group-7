@@ -1,3 +1,40 @@
+/* Light theme */
+:root[data-theme="light"] {
+  --bg-color: #ffffff;
+  --text-color: #000000;   
+  --primary-color: #0078d4;
+  --secondary-color: #f3f3f3;
+  --accent-color: #ffcc00;
+}
+
+/* Dark theme */
+:root[data-theme="dark"] {
+  --bg-color: #121212;
+  --text-color: #ffffff;
+  --primary-color: #3399ff;
+  --secondary-color: #1e1e1e;
+  --accent-color: #ffd633;
+}
+
+/* Apply variables globally */
+body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+}
+
+button {
+  background: var(--secondary-color);
+  color: var(--text-color);
+  border: 1px solid var(--primary-color);
+}
+
+a {
+  color: var(--primary-color);
+}
+
+.highlight {
+  background: var(--accent-color);
+}
 /* ===== THEME VARIABLES =====
    Colours are approximated from the Figma preview.
    Replace with exact hex values from Figma (Inspect panel). */
