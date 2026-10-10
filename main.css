@@ -168,7 +168,6 @@ main > section { margin-block: var(--space); }
     display: grid;
     grid-template-columns: 11.7rem 1fr;
     gap:3.2rem;
-    /* align-items: center; */
 }
 
 #planet-card img{
@@ -197,15 +196,14 @@ main > section { margin-block: var(--space); }
     grid-template-columns: 1fr 1fr;
     gap:1.6rem;
 }
-
-/* NO ROOT VARIABLES FOR TYPE, DD */
 .type{
     color: #0079FF;
 }
-
+p{
+    color: var(--color-text);
+}
 dd{
     font-weight: 700;
-    color: #2B3442;
     margin-left: 0;
 }
 
