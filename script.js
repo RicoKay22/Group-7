@@ -125,7 +125,60 @@ loadPlanets();
 /* ===== [feature/header-search] ===== */
 
 
-/* ===== [feature/planet-card] ===== */
+function buildFactsTable() {
+  const factsTablePlanets = [
+    {
+      name: "Mercury", mass: "0.330", diameter: "4,878",
+      groups: [{ label: "Terrestrial Planets", rows: 4, cols: 2 }],
+    },
+    { name: "Venus", mass: "0.330", diameter: "4,878" },
+    { name: "Earth", mass: "0.330", diameter: "4,878" },
+    { name: "Mars", mass: "0.330", diameter: "4,878" },
+    {
+      name: "Jupiter", mass: "0.330", diameter: "4,878",
+      groups: [
+        { label: "Jovian Planets", rows: 4, cols: 1 },
+        { label: "Gas Giants", rows: 2, cols: 1 },
+      ],
+    },
+    { name: "Saturn", mass: "0.330", diameter: "4,878" },
+    {
+      name: "Uranus", mass: "0.330", diameter: "4,878",
+      groups: [{ label: "Ice Giants", rows: 2, cols: 1 }],
+    },
+    { name: "Neptune", mass: "0.330", diameter: "4,878" },
+    {
+      name: "Pluto", mass: "0.330", diameter: "4,878",
+      groups: [{ label: "Dwarf Planets", rows: 1, cols: 2 }],
+    },
+  ];
+
+  const tableBody = document.querySelector(".facts-table tbody");
+  if (!tableBody) return;
+
+  factsTablePlanets.forEach((planet) => {
+    const row = document.createElement("tr");
+
+    (planet.groups || []).forEach((group) => {
+      const groupCell = document.createElement("td");
+      groupCell.className = "group";
+      groupCell.textContent = group.label;
+      groupCell.rowSpan = group.rows;
+      groupCell.colSpan = group.cols;
+      row.append(groupCell);
+    });
+
+    [planet.name, planet.mass, planet.diameter].forEach((text) => {
+      const cell = document.createElement("td");
+      cell.textContent = text;
+      row.append(cell);
+    });
+
+    tableBody.append(row);
+  });
+}
+
+buildFactsTable();
 
 
 /* ===== [feature/facts-table] ===== */

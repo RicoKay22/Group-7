@@ -160,7 +160,87 @@ main > section { margin-block: var(--space); }
 /* ===== [feature/planet-card] ===== */
 
 
-/* ===== [feature/facts-table] ===== */
+:root {
+  --table-dark: #101c36;
+  --table-group: #8fa3d6;
+  --table-group-text: #101c36;
+  --table-cell: #f3f8ff;
+  --table-text: #1b2a4a;
+  --table-line: #cfdaf0;
+}
+
+:root[data-theme="dark"] {
+  --table-dark: #0a1226;
+  --table-group: #3b4d8a;
+  --table-group-text: #ffffff;
+  --table-cell: #16213a;
+  --table-text: #e6ecfa;
+  --table-line: #2c3a5f;
+}
+
+.table-wrapper {
+  overflow-x: auto;
+}
+
+.facts-table {
+  width: 100%;
+  min-width: 34rem;
+  border-collapse: separate;
+  border-spacing: 0;
+  text-align: center;
+}
+
+.facts-table caption {
+  padding-bottom: 0.75rem;
+  text-align: left;
+  font-weight: 500;
+}
+
+.facts-table td {
+  padding: 1rem 1.25rem;
+  background: var(--table-cell);
+  color: var(--table-text);
+  border-right: 1px solid var(--table-line);
+  border-bottom: 1px solid var(--table-line);
+  white-space: nowrap;
+}
+
+.facts-table tr:first-child td {
+  background: var(--table-dark);
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.facts-table .group {
+  background: var(--table-group);
+  color: var(--table-group-text);
+  font-weight: 600;
+  white-space: normal;
+}
+
+.facts-table td:last-child {
+  border-right: none;
+}
+
+.facts-table tr:last-child td {
+  border-bottom: none;
+}
+
+.facts-table tr:first-child td:first-child {
+  border-top-left-radius: 1rem;
+}
+
+.facts-table tr:first-child td:last-child {
+  border-top-right-radius: 1rem;
+}
+
+.facts-table tr:last-child td:first-child {
+  border-bottom-left-radius: 1rem;
+}
+
+.facts-table tr:last-child td:last-child {
+  border-bottom-right-radius: 1rem;
+}
 
 
 /* ===== [feature/theme-toggle] ===== */
