@@ -159,7 +159,7 @@ main > section { margin-block: var(--space); }
 
 /* ===== [feature/planet-card] ===== */
 
-
+/* ===== [feature/facts-table] ===== */
 :root {
   --table-dark: #101c36;
   --table-group: #8fa3d6;

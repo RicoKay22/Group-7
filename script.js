@@ -124,7 +124,7 @@ loadPlanets();
 
 /* ===== [feature/header-search] ===== */
 
-
+/* ===== [feature/planet-card] ===== */
 function buildFactsTable() {
   const factsTablePlanets = [
     {
