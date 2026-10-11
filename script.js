@@ -153,7 +153,7 @@ function renderPlanetCard(planet) {
     card.setAttribute("aria-labelledby", "planet-card-name");
 
     // Static structure only. Data is inserted with textContent below.
-    card.innerHTML = `
+        card.innerHTML = `
         <figure class="planet-card__figure">
             <img class="planet-card__image" data-img width="116" height="116">
         </figure>
@@ -171,26 +171,9 @@ function renderPlanetCard(planet) {
             <li>${cardIcons.temperature}<span class="visually-hidden">Temperature in kelvin: </span><span data-field="temperature"></span></li>
             <li>${cardIcons.moons}<span class="visually-hidden">Moons: </span><span data-field="moons"></span></li>
             <li>${cardIcons.diameter}<span class="visually-hidden">Diameter in kilometres: </span><span data-field="diameter"></span></li>
-            <li>${cardIcons.distance}<span class="visually-hidden">Distance from the Sun in million kilometres: </span><span data-field="distanceFromSun"></span></li>
-          <img class="planet-card__image" data-img width="116" height="116">
-        </figure>
-        <div class="planet-card__title">
-          <h3 id="planet-card-name" data-field="name"></h3>
-          <p class="planet-card__type" data-field="type"></p>
-        </div>
-        <p class="planet-card__description" data-field="description"></p>
-        <dl class="planet-card__stats">
-          <div><dt>Gravity</dt><dd data-field="gravity"></dd></div>
-          <div><dt>Mass</dt><dd data-field="mass"></dd></div>
-          <div><dt>Period</dt><dd data-field="period"></dd></div>
-        </dl>
-        <ul class="planet-card__facts">
-          <li>${cardIcons.temperature}<span class="visually-hidden">Temperature in kelvin: </span><span data-field="temperature"></span></li>
-          <li>${cardIcons.moons}<span class="visually-hidden">Moons: </span><span data-field="moons"></span></li>
-          <li>${cardIcons.diameter}<span class="visually-hidden">Diameter in kilometres: </span><span data-field="diameter"></span></li>
-          <li>${cardIcons.distance}<span class="visually-hidden">Distance from the Sun in million kilometres: </span><span data-field="distanceFromSun"></span></li>
+            <li>${cardIcons.distance}<span class="visually-hidden">Distance from the Sun in million kilometres: </span><span data-field="distanceFromSun"></span></li> 
         </ul>
-    `;
+    `; 
 
     card.querySelectorAll("[data-field]").forEach((el) => {
         el.textContent = planet[el.dataset.field];
