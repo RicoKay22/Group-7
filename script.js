@@ -288,3 +288,66 @@ document.addEventListener("planets:loaded", (e) => renderFactsTable(e.detail));
 
 
 /* ===== [feature/search-logic] ===== */
+const searchForm = document.getElementById("search-form");
+const searchInput = document.getElementById("search-input");
+const searchErrorEl = document.getElementById("search-error");
+
+// Returns one planet or null. Trims, ignores case, allows partial names.
+// Order of preference: exact match, name starts with query, name contains query.
+function searchPlanets(query) {
+    const term = String(query || "").trim().toLowerCase();
+    if (!term) return null;
+
+    return (
+        planets.find((planet) => planet.name.toLowerCase() === term) ||
+        planets.find((planet) => planet.name.toLowerCase().startsWith(term)) ||
+        planets.find((planet) => planet.name.toLowerCase().includes(term)) ||
+        null
+    );
+}
+
+function renderNotFound(query) {
+    const card = document.createElement("article");
+    card.id = "planet-card";
+    card.className = "planet-card planet-card--empty";
+    card.dataset.query = query;
+    card.innerHTML = `
+        <h3>No results found!</h3>
+        <p>We couldn't find any planet matching your search. Please double-check the name and try again.</p>
+    `;
+    mountPlanetCard(card);
+}
+
+function showSearchError() {
+    searchErrorEl.hidden = false;
+    searchInput.setAttribute("aria-invalid", "true");
+}
+
+function hideSearchError() {
+    searchErrorEl.hidden = true;
+    searchInput.removeAttribute("aria-invalid");
+}
+
+if (searchForm && searchInput && searchErrorEl) {
+    searchForm.addEventListener("submit", (event) => {
+        event.preventDefault();
+
+        const query = searchInput.value;
+        if (!query.trim()) {
+            hideSearchError(); // empty search: nothing to do, nothing breaks
+            return;
+        }
+
+        const result = searchPlanets(query);
+        if (result) {
+            hideSearchError();
+            renderPlanetCard(result);
+        } else {
+            showSearchError();
+            renderNotFound(query);
+        }
+    });
+
+    // Clear the error as soon as the user types again
+    searchInput.addEventListener("input", hideSearchError);
+}
