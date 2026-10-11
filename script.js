@@ -140,15 +140,9 @@ const cardIcons = {
 function mountPlanetCard(card) {
     const existingCard = planetDetailsEl.querySelector("#planet-card");
     if (existingCard) {
-<<<<<<< HEAD
         existingCard.replaceWith(card);
     } else {
         planetDetailsEl.appendChild(card);
-=======
-      existingCard.replaceWith(card);
-    } else {
-      planetDetailsEl.appendChild(card);
->>>>>>> main
     }
 }
 
@@ -161,7 +155,6 @@ function renderPlanetCard(planet) {
     // Static structure only. Data is inserted with textContent below.
     card.innerHTML = `
         <figure class="planet-card__figure">
-<<<<<<< HEAD
             <img class="planet-card__image" data-img width="116" height="116">
         </figure>
         <div class="planet-card__title">
@@ -179,7 +172,6 @@ function renderPlanetCard(planet) {
             <li>${cardIcons.moons}<span class="visually-hidden">Moons: </span><span data-field="moons"></span></li>
             <li>${cardIcons.diameter}<span class="visually-hidden">Diameter in kilometres: </span><span data-field="diameter"></span></li>
             <li>${cardIcons.distance}<span class="visually-hidden">Distance from the Sun in million kilometres: </span><span data-field="distanceFromSun"></span></li>
-=======
           <img class="planet-card__image" data-img width="116" height="116">
         </figure>
         <div class="planet-card__title">
@@ -197,7 +189,6 @@ function renderPlanetCard(planet) {
           <li>${cardIcons.moons}<span class="visually-hidden">Moons: </span><span data-field="moons"></span></li>
           <li>${cardIcons.diameter}<span class="visually-hidden">Diameter in kilometres: </span><span data-field="diameter"></span></li>
           <li>${cardIcons.distance}<span class="visually-hidden">Distance from the Sun in million kilometres: </span><span data-field="distanceFromSun"></span></li>
->>>>>>> main
         </ul>
     `;
 
@@ -219,6 +210,95 @@ document.addEventListener("planets:loaded", () => {
 });
 
 /* ===== [feature/facts-table] ===== */
+const factsContainer = document.getElementById("facts-table-container");
+
+// Table groups, in display order. "type" values come from the API.
+const factsGroups = [
+    { label: "Terrestrial Planets", type: "Terrestrial" },
+    {
+        parent: "Jovian Planets",
+        subgroups: [
+            { label: "Gas Giants", type: "Gas Giant" },
+            { label: "Ice Giants", type: "Ice Giant" }
+        ]
+    },
+    { label: "Dwarf Planets", type: "Dwarf Planet" }
+];
+
+function makeFactsCell(tag, text, attrs = {}) {
+    const cell = document.createElement(tag);
+    cell.textContent = text;
+    Object.entries(attrs).forEach(([name, value]) => cell.setAttribute(name, value));
+    return cell;
+}
+
+function renderFactsTable(planetList) {
+    const table = document.createElement("table");
+    table.className = "facts-table";
+
+    const caption = document.createElement("caption");
+    caption.textContent = "Data about the planets of our solar system (Planetary facts taken from NASA)";
+    table.appendChild(caption);
+
+    // Header
+    const thead = document.createElement("thead");
+    const headRow = document.createElement("tr");
+    const groupHead = makeFactsCell("th", "", { scope: "col", colspan: "2" });
+    groupHead.innerHTML = '<span class="visually-hidden">Planet group</span>';
+    headRow.appendChild(groupHead);
+    headRow.appendChild(makeFactsCell("th", "Name", { scope: "col" }));
+    const massHead = makeFactsCell("th", "", { scope: "col" });
+    massHead.innerHTML = "Mass (10<sup>24</sup>kg)";
+    headRow.appendChild(massHead);
+    headRow.appendChild(makeFactsCell("th", "Diameter (km)", { scope: "col" }));
+    thead.appendChild(headRow);
+    table.appendChild(thead);
+
+    // Body: rows are built from the data, not hard-coded
+    const tbody = document.createElement("tbody");
+
+    function addPlanetRows(list, leadingCells) {
+        list.forEach((planet, index) => {
+            const row = document.createElement("tr");
+            if (index === 0) leadingCells.forEach((cell) => row.appendChild(cell));
+            row.appendChild(makeFactsCell("th", planet.name, { scope: "row" }));
+            row.appendChild(makeFactsCell("td", String(planet.mass)));
+            row.appendChild(makeFactsCell("td", planet.diameter.toLocaleString("en-US")));
+            tbody.appendChild(row);
+        });
+    }
+
+    factsGroups.forEach((group) => {
+        if (group.subgroups) {
+            const subgroupLists = group.subgroups.map((sub) => ({
+                sub,
+                list: planetList.filter((planet) => planet.type === sub.type)
+            })).filter((entry) => entry.list.length > 0);
+
+            const total = subgroupLists.reduce((sum, entry) => sum + entry.list.length, 0);
+            if (total === 0) return;
+
+            subgroupLists.forEach((entry, subIndex) => {
+                const leading = [];
+                if (subIndex === 0) {
+                    leading.push(makeFactsCell("th", group.parent, { scope: "rowgroup", rowspan: String(total) }));
+                }
+                leading.push(makeFactsCell("th", entry.sub.label, { scope: "rowgroup", rowspan: String(entry.list.length) }));
+                addPlanetRows(entry.list, leading);
+            });
+        } else {
+            const list = planetList.filter((planet) => planet.type === group.type);
+            if (list.length === 0) return;
+            const leading = [makeFactsCell("th", group.label, { scope: "rowgroup", colspan: "2", rowspan: String(list.length) })];
+            addPlanetRows(list, leading);
+        }
+    });
+
+    table.appendChild(tbody);
+    factsContainer.replaceChildren(table);
+}
+
+document.addEventListener("planets:loaded", (e) => renderFactsTable(e.detail));
 
 
 /* ===== [feature/theme-toggle] ===== */
