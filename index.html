@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en" data-theme="light">
 
 <head>
     <meta charset="UTF-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="author" content="group 7 Hajime TS Capstone Project.">
     <meta name="description" content="Planet: search the planets of our solar system and compare their key facts.">
     <title>Planet | Solar System Facts</title>
@@ -19,8 +19,11 @@
 
     <header class="site-header" id="site-header">
         <div class="container site-header__inner">
-            <a class="logo" href="./">
-                <img src="image/planetlogo.jpeg" alt="planet" />
+
+            <!-- [feature/header-search] Logo (black version for light mode, white version for dark mode; swapped in CSS) -->
+            <a class="logo" href="./" aria-label="Planet home">
+                <img class="logo__img logo__img--light-mode" src="images/logo-black.svg" alt="" width="121" height="53">
+                <img class="logo__img logo__img--dark-mode" src="images/logo-white.svg" alt="" width="121" height="53">
             </a>
             <div id="theme-toggle-slot"></div>
         </div>
@@ -31,22 +34,25 @@
 
         <!-- [feature/header-search] Search form goes here -->
         <section id="search-section" aria-label="Search planets">
-            <form class="search-form" role="search">
-                <svg class="search-form__icon" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
-        <circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/>
-        <line x1="16.5" y1="16.5" x2="21" y2="21" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-      </svg>
-                <input class="search-form__input" type="search" id="planet-search" placeholder="Search planet name" aria-label="Search planet name" />
-                <button class="search-form__btn" type="submit">Search</button>
+
+            <!-- [feature/header-search] Search form -->
+            <form id="search-form" class="search-form" role="search" novalidate>
+                <svg class="search-form__icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+                    <circle cx="11" cy="11" r="7"/>
+                    <path d="M20 20l-3.5-3.5"/>
+                </svg>
+                <label for="search-input" class="visually-hidden">Search planet name</label>
+                <input id="search-input" class="search-form__input" type="search" name="planet" placeholder="Search planet name..." autocomplete="off" aria-describedby="search-error">
+                <span id="search-error" class="search-form__error" role="alert" hidden>No results</span>
+                <button class="search-form__button" type="submit">Search</button>
             </form>
+
         </section>
         <section id="planet-details" aria-label="Planet details" aria-live="polite">
             <p id="planet-status" class="status">Loading planets…</p>
 
-            <!-- [feature/planet-card] Planet card renders here -->
+            <!-- [feature/planet-card] Planet card renders here (script.js builds <article id="planet-card">) -->
 
-            <article id="planet-card"></article>
-        
         </section>
         <!-- [feature/planet-card] Planet card renders here -->
 
@@ -55,21 +61,30 @@
             <p>Below is a comparative table of major planets in our solar system. The data highlights key physical properties used by astronomers and researchers worldwide.</p>
             <div id="facts-table-container" class="table-wrapper">
 
-                <!-- [feature/facts-table] Planetary facts table renders here -->
-            
+                <!-- [feature/facts-table] Table renders here -->
+
             </div>
         </section>
     </main>
 
     <footer class="site-footer" id="site-footer">
-        <div class="container">
+        <div class="container site-footer__inner">
 
-            <!-- [feature/footer] About text and links go here -->
+            <!-- [feature/footer] About text and links -->
+            <div class="site-footer__about">
+                <h2 class="site-footer__title">About</h2>
+                <!-- TODO: replace the text in the span with the group's first names -->
+                <p><span id="team-names"> TSAcademy Hajime cohort First names of group7 members.</span><br>OLUMIDE (GROUP-LEAD), IBRAHIM, ESTHER, TOLUWALOPE, FAVOUR, MATTHEW, EMMANUEL, AYOMIKUN, PRECIOUS, HELEN, AZEEZAT, MUIZ. 
+                  </p>
+            </div>
 
-
+            <div class="site-footer__credits">
+                <p>©2026 Design by <a href="https://amakandukwu.com" target="_blank" rel="noopener noreferrer">Amaka N</a></p>
+                <p>Built by <a href="https://github.com/RicoKay22/Group-7" target="_blank" rel="noopener noreferrer">Group-7</a>. All rights reserved</p>
+                <p><a href="https://tsacademyonline.com/" target="_blank" rel="noopener noreferrer">TSAcademy</a></p>
+            </div>
 
         </div>
     </footer>
 </body>
-
-</html>
+</html> 

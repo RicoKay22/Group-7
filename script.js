@@ -1,56 +1,4 @@
-function initTheme() {
-  const root = document.documentElement;
-  const toggleSlot = document.getElementById("theme-toggle-slot");
-
-  // Create the button inside the slot
-  const toggleBtn = document.createElement("button");
-  toggleBtn.id = "theme-toggle";
-  toggleBtn.setAttribute("aria-pressed", "false");
-  toggleSlot.appendChild(toggleBtn);
-
-  // Helper: apply theme
-  function applyTheme(theme) {
-    root.dataset.theme = theme;
-    try {
-      localStorage.setItem("theme", theme);
-    } catch (e) {
-      console.warn("Could not save theme:", e);
-    }
-
-    if (theme === "light") {
-      toggleBtn.textContent = "DARK 🌙";
-      toggleBtn.setAttribute("aria-pressed", "false");
-    } else {
-      toggleBtn.textContent = "LIGHT 🌞";
-      toggleBtn.setAttribute("aria-pressed", "true");
-    }
-  }
-
-  // Load saved theme or system preference
-  let savedTheme;
-  try {
-    savedTheme = localStorage.getItem("theme");
-  } catch (e) {
-    savedTheme = null;
-  }
-
-  if (savedTheme) {
-    applyTheme(savedTheme);
-  } else {
-    const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-    applyTheme(prefersDark ? "dark" : "light");
-  }
-
-  // Toggle on click
-  toggleBtn.addEventListener("click", () => {
-    const newTheme = root.dataset.theme === "light" ? "dark" : "light";
-    applyTheme(newTheme);
-  });
-}
-
-// Run on page load
-document.addEventListener("DOMContentLoaded", initTheme);
-/* ==========================================================
+ /* ==========================================================
    GROUP 7 CAPSTONE: script.js
    How the pieces talk to each other (like a radio station):
    api-fetch "broadcasts" a "planets:loaded" event once the data
@@ -123,6 +71,7 @@ loadPlanets();
 
 
 /* ===== [feature/header-search] ===== */
+// Markup and styling only (see index.html and main.css). No JavaScript needed here.
 
 
 /* ===== [feature/planet-card] ===== */
@@ -153,7 +102,7 @@ function renderPlanetCard(planet) {
     card.setAttribute("aria-labelledby", "planet-card-name");
 
     // Static structure only. Data is inserted with textContent below.
-        card.innerHTML = `
+    card.innerHTML = `
         <figure class="planet-card__figure">
             <img class="planet-card__image" data-img width="116" height="116">
         </figure>
@@ -171,9 +120,9 @@ function renderPlanetCard(planet) {
             <li>${cardIcons.temperature}<span class="visually-hidden">Temperature in kelvin: </span><span data-field="temperature"></span></li>
             <li>${cardIcons.moons}<span class="visually-hidden">Moons: </span><span data-field="moons"></span></li>
             <li>${cardIcons.diameter}<span class="visually-hidden">Diameter in kilometres: </span><span data-field="diameter"></span></li>
-            <li>${cardIcons.distance}<span class="visually-hidden">Distance from the Sun in million kilometres: </span><span data-field="distanceFromSun"></span></li> 
+            <li>${cardIcons.distance}<span class="visually-hidden">Distance from the Sun in million kilometres: </span><span data-field="distanceFromSun"></span></li>
         </ul>
-    `; 
+    `;
 
     card.querySelectorAll("[data-field]").forEach((el) => {
         el.textContent = planet[el.dataset.field];
@@ -285,6 +234,64 @@ document.addEventListener("planets:loaded", (e) => renderFactsTable(e.detail));
 
 
 /* ===== [feature/theme-toggle] ===== */
+const themeIcons = {
+    moon: '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>',
+    sun: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="4" fill="currentColor"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M4.9 19.1L7 17M17 7l2.1-2.1"/></svg>'
+};
+
+function initTheme() {
+    const root = document.documentElement;
+    const toggleSlot = document.getElementById("theme-toggle-slot");
+
+    // Create the button inside the slot
+    const toggleBtn = document.createElement("button");
+    toggleBtn.id = "theme-toggle";
+    toggleBtn.type = "button";
+    toggleBtn.setAttribute("aria-pressed", "false");
+    toggleSlot.appendChild(toggleBtn);
+
+    // Helper: apply theme
+    function applyTheme(theme) {
+        root.dataset.theme = theme;
+        try {
+            localStorage.setItem("theme", theme);
+        } catch (e) {
+            console.warn("Could not save theme:", e);
+        }
+
+        if (theme === "light") {
+            toggleBtn.innerHTML = `<span>DARK</span>${themeIcons.moon}`;
+            toggleBtn.setAttribute("aria-pressed", "false");
+        } else {
+            toggleBtn.innerHTML = `<span>LIGHT</span>${themeIcons.sun}`;
+            toggleBtn.setAttribute("aria-pressed", "true");
+        }
+    }
+
+    // Load saved theme or system preference
+    let savedTheme;
+    try {
+        savedTheme = localStorage.getItem("theme");
+    } catch (e) {
+        savedTheme = null;
+    }
+
+    if (savedTheme === "light" || savedTheme === "dark") {
+        applyTheme(savedTheme);
+    } else {
+        const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+        applyTheme(prefersDark ? "dark" : "light");
+    }
+
+    // Toggle on click
+    toggleBtn.addEventListener("click", () => {
+        const newTheme = root.dataset.theme === "light" ? "dark" : "light";
+        applyTheme(newTheme);
+    });
+}
+
+// Run on page load
+document.addEventListener("DOMContentLoaded", initTheme);
 
 
 /* ===== [feature/search-logic] ===== */
