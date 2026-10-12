@@ -3,6 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="author" content="group 7 Hajime TS Capstone Project.">
     <meta name="description" content="Planet: search the planets of our solar system and compare their key facts.">
     <title>Planet | Solar System Facts</title>
@@ -41,6 +42,11 @@
         </section>
         <section id="planet-details" aria-label="Planet details" aria-live="polite">
             <p id="planet-status" class="status">Loading planets…</p>
+
+            <!-- [feature/planet-card] Planet card renders here -->
+
+            <article id="planet-card"></article>
+        
         </section>
         <!-- [feature/planet-card] Planet card renders here -->
 
@@ -49,8 +55,8 @@
             <p>Below is a comparative table of major planets in our solar system. The data highlights key physical properties used by astronomers and researchers worldwide.</p>
             <div id="facts-table-container" class="table-wrapper">
 
-                <!-- [feature/facts-table] Table renders here -->
-
+                <!-- [feature/facts-table] Planetary facts table renders here -->
+            
             </div>
         </section>
     </main>
