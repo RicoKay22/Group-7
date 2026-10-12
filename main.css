@@ -419,5 +419,274 @@ main > section { margin-block: var(--space); }
 
 /* ===== [feature/responsive] ===== */
 
+/* Prevent padding and borders from making elements wider */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+/* Prevent children from forcing their containers wider */
+.container,
+main,
+main > section,
+#planet-details,
+#facts-section,
+.table-wrapper {
+    min-width: 0;
+    max-width: 100%;
+}
+
+/* Keep images inside their containers */
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* Keep the facts table scrollable within its own wrapper */
+.table-wrapper {
+    display: block;
+    width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+}
+
+.facts-table {
+    width: 100%;
+    min-width: 30rem;
+}
+
+/* TABLETS: 768px and below */
+@media (max-width: 768px) {
+    .container {
+        width: 100%;
+        max-width: 100%;
+        padding-left: 1.25rem;
+        padding-right: 1.25rem;
+    }
+
+    /* Make the planet card fill the available width */
+    .planet-card {
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+        grid-template-columns: 6rem minmax(0, 1fr);
+        column-gap: 1.25rem;
+        padding: 1.5rem;
+    }
+
+    .planet-card__figure {
+        width: 6rem;
+        height: 6rem;
+    }
+
+    /* Keep the three statistics inside the card */
+    .planet-card__stats {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 0.75rem;
+        padding: 0.875rem;
+    }
+
+    .planet-card__stats dd {
+        overflow-wrap: anywhere;
+    }
+
+    /* Keep the planet fact rows inside the card */
+    .planet-card__facts {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        column-gap: 1rem;
+    }
+
+    .planet-card__facts li {
+        min-width: 0;
+        overflow-wrap: anywhere;
+    }
+
+    /* Allow the footer to stack on smaller screens */
+    .footer-container {
+        width: 100%;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1.5rem;
+    }
+
+    .footer-about,
+    .footer-links {
+        width: 100%;
+        max-width: 100%;
+        text-align: left;
+    }
+}
+
+/* MOBILE PHONES: 480px and below */
+@media (max-width: 480px) {
+    .container {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+
+    .site-header__inner {
+        flex-wrap: wrap;
+        gap: 0.75rem;
+    }
+
+    /* Stack the planet card content vertically */
+    .planet-card {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr);
+        grid-template-areas:
+            "figure"
+            "title"
+            "desc"
+            "stats"
+            "facts";
+        gap: 1rem;
+        padding: 1.25rem;
+    }
+
+    .planet-card__figure {
+        justify-self: center;
+        width: 7rem;
+        height: 7rem;
+    }
+
+    .planet-card__title,
+    .planet-card__description,
+    .planet-card__stats,
+    .planet-card__facts {
+        width: 100%;
+        min-width: 0;
+    }
+
+    .planet-card__title h3 {
+        font-size: 1.25rem;
+        overflow-wrap: anywhere;
+    }
+
+    /* Stack Gravity, Mass and Period vertically */
+    .planet-card__stats {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr);
+        gap: 0.75rem;
+        margin-top: 0;
+        padding: 1rem;
+    }
+
+    .planet-card__stats > div {
+        width: 100%;
+        min-width: 0;
+        padding-bottom: 0.5rem;
+        border-bottom: 1px solid var(--color-border);
+    }
+
+    .planet-card__stats > div:last-child {
+        padding-bottom: 0;
+        border-bottom: 0;
+    }
+
+    /* Display icon/statistic rows in one column */
+    .planet-card__facts {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr);
+        gap: 0.875rem;
+        margin-top: 0;
+    }
+
+    .planet-card__facts li {
+        display: flex;
+        align-items: center;
+        gap: 0.625rem;
+        min-width: 0;
+        overflow-wrap: anywhere;
+    }
+
+    .planet-card__facts svg {
+        flex-shrink: 0;
+    }
+
+    /* Make the facts heading fit smaller screens */
+    #facts-section {
+        margin-top: 2rem;
+    }
+
+    #facts-title {
+        font-size: 1.25rem;
+        overflow-wrap: anywhere;
+    }
+
+    #facts-section > p {
+        overflow-wrap: anywhere;
+    }
+
+    /* Preserve table readability; scroll only inside its wrapper */
+    .table-wrapper {
+        width: 100%;
+        max-width: 100%;
+        overflow-x: auto;
+    }
+
+    .facts-table {
+        width: 100%;
+        min-width: 30rem;
+        font-size: 0.6875rem;
+    }
+
+    .facts-table th,
+    .facts-table td {
+        padding: 0.55rem 0.4rem;
+    }
+
+    .facts-table caption {
+        overflow-wrap: anywhere;
+    }
+
+    /* Stack footer sections and keep text readable */
+    .site-footer {
+        padding: 1.5rem 1rem;
+    }
+
+    .footer-container {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1.5rem;
+    }
+
+    .footer-about,
+    .footer-links {
+        width: 100%;
+        max-width: 100%;
+        text-align: left;
+        overflow-wrap: anywhere;
+    }
+
+    .footer-links p {
+        overflow-wrap: anywhere;
+    }
+}
+
+/* VERY SMALL PHONES: 360px and below */
+@media (max-width: 360px) {
+    .container {
+        padding-left: 0.75rem;
+        padding-right: 0.75rem;
+    }
+
+    .planet-card {
+        padding: 1rem;
+    }
+
+    .planet-card__stats {
+        padding: 0.75rem;
+    }
+
+    #facts-title {
+        font-size: 1.125rem;
+    }
+
+    .site-footer {
+        padding: 1.25rem 0.75rem;
+    }
+}
 
 
