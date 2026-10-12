@@ -141,7 +141,6 @@ document.addEventListener("planets:loaded", () => {
     if (earth) renderPlanetCard(earth);
 });
 
-
 /* ===== [feature/facts-table] ===== */
 const factsContainer = document.getElementById("facts-table-container");
 
