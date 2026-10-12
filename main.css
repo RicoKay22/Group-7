@@ -1,178 +1,281 @@
-/* Light theme */
-:root[data-theme="light"] {
-  --bg-color: #ffffff;
-  --text-color: #000000;   
-  --primary-color: #0078d4;
-  --secondary-color: #f3f3f3;
-  --accent-color: #ffcc00;
-}
-
-/* Dark theme */
-:root[data-theme="dark"] {
-  --bg-color: #121212;
-  --text-color: #ffffff;
-  --primary-color: #3399ff;
-  --secondary-color: #1e1e1e;
-  --accent-color: #ffd633;
-}
-
-/* Apply variables globally */
-body {
-  background-color: var(--bg-color);
-  color: var(--text-color);
-}
-
-button {
-  background: var(--secondary-color);
-  color: var(--text-color);
-  border: 1px solid var(--primary-color);
-}
-
-a {
-  color: var(--primary-color);
-}
-
-.highlight {
-  background: var(--accent-color);
-}
-/* ===== THEME VARIABLES =====
+    /* Light theme */
+    
+     :root[data-theme="light"] {
+        --bg-color: #ffffff;
+        --text-color: #000000;
+        --primary-color: #0078d4;
+        --secondary-color: #f3f3f3;
+        --accent-color: #ffcc00;
+    }
+    /* Dark theme */
+    
+     :root[data-theme="dark"] {
+        --bg-color: #121212;
+        --text-color: #ffffff;
+        --primary-color: #3399ff;
+        --secondary-color: #1e1e1e;
+        --accent-color: #ffd633;
+    }
+    /* Apply variables globally */
+    
+    body {
+        background-color: var(--bg-color);
+        color: var(--text-color);
+    }
+    
+    button {
+        background: var(--secondary-color);
+        color: var(--text-color);
+        border: 1px solid var(--primary-color);
+    }
+    
+    a {
+        color: var(--primary-color);
+    }
+    
+    .highlight {
+        background: var(--accent-color);
+    }
+    /* ===== THEME VARIABLES =====
    Colours are approximated from the Figma preview.
    Replace with exact hex values from Figma (Inspect panel). */
-:root,
-[data-theme="light"] {
-    --color-bg:#f6f8ff;
-    --color-surface: #ffffff;
-    --color-surface-alt: #f1f5fc;
-    --color-text: #1b2a4a;
-    --color-text-muted: #7a8bad;
-    --color-heading: #1d4ed8;
-    --color-primary: #0a84ff;
-    --color-primary-hover: #5aaeff;
-    --color-border: #dbe4f5;
-    --color-error: #e5484d;
-    --color-table-head: #1d4ed8;
-    --color-table-head-text: #ffffff;
-    --color-table-group: #e4ecfb;
-    --color-table-cell: #ffffff;
-    --color-table-text: #1b2a4a;
-    --shadow-card: 0 4px 16px rgba(29, 78, 216, 0.08);
-}
-
-[data-theme="dark"] {
-    --color-bg: #141d2f;
-    --color-surface: #1b2a4d;
-    --color-surface-alt: #101a33;
-    --color-text: #ffffff;
-    --color-text-muted: #8fa3c8;
-    --color-heading: #ffffff;
-    --color-primary: #0a84ff;
-    --color-primary-hover: #5aaeff;
-    --color-border: #2a3b66;
-    --color-error: #ff6b70;
-    --color-table-head: #1d4ed8;
-    --color-table-head-text: #ffffff;
-    --color-table-group: #8ea3d6;
-    --color-table-cell: #f3f6fc;
-    --color-table-text: #1b2a4a;
-    --shadow-card: none;
-}
-
-:root {
-    --font-body: "Space Mono", ui-monospace, monospace;
-    --font-heading: "Inter", system-ui, sans-serif;
-    --radius: 12px;
-    --container-max: 778px; /* 730px content + 2x24px padding */
-    --space: 1.5rem;
-}
-
-/* ===== RESET & BASE ===== */
-*, *::before, *::after { box-sizing: border-box; }
-
-body {
-    margin: 0;
-    font-family: var(--font-body);
-    font-size: 0.875rem;
-    line-height: 1.6;
-    color: var(--color-text);
-    background: var(--color-bg);
-    transition: background-color 0.2s, color 0.2s;
-}
-
-img { max-width: 100%; display: block; }
-h1, h2, h3 { font-family: var(--font-heading); line-height: 1.2; }
-button, input { font: inherit; }
-
-:focus-visible {
-    outline: 2px solid var(--color-primary);
-    outline-offset: 2px;
-}
-
-/* ===== LAYOUT HELPERS ===== */
-.container {
-    width: 100%;
-    max-width: var(--container-max);
-    margin-inline: auto;
-    padding-inline: var(--space);
-}
-
-main > section { margin-block: var(--space); }
-
-.visually-hidden {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    overflow: hidden;
-    clip: rect(0 0 0 0);
-    white-space: nowrap;
-}
-
-.skip-link {
-    position: absolute;
-    left: 1rem;
-    top: -4rem;
-    padding: 0.5rem 1rem;
-    background: var(--color-primary);
-    color: #fff;
-    border-radius: 6px;
-}
-.skip-link:focus { top: 1rem; }
-
-.status { text-align: center; color: var(--color-text-muted); }
-.status--error { color: var(--color-error); }
-
-.table-wrapper { overflow-x: auto; }
-
-/* ===== [feature/header-search] ===== */
-.site-header__inner {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding-block: var(--space);
-}
-.logo {
-    font-family: var(--font-heading);
-    font-weight: 700;
-    color: var(--color-text);
-    text-decoration: none;
-}
-
-
-/* ===== [feature/planet-card] ===== */
-
-
-/* ===== [feature/facts-table] ===== */
-
-
-/* ===== [feature/theme-toggle] ===== */
-
-
-/* ===== [feature/search-logic] ===== */
-
-
-/* ===== [feature/footer] ===== */
-
-
-/* ===== [feature/responsive] ===== */
-
-
-
+    
+     :root,
+    [data-theme="light"] {
+        --color-bg: #f6f8ff;
+        --color-surface: #ffffff;
+        --color-surface-alt: #f1f5fc;
+        --color-text: #1b2a4a;
+        --color-text-muted: #7a8bad;
+        --color-heading: #1d4ed8;
+        --color-primary: #0a84ff;
+        --color-primary-hover: #5aaeff;
+        --color-border: #dbe4f5;
+        --color-error: #e5484d;
+        --color-table-head: #1d4ed8;
+        --color-table-head-text: #ffffff;
+        --color-table-group: #e4ecfb;
+        --color-table-cell: #ffffff;
+        --color-table-text: #1b2a4a;
+        --shadow-card: 0 4px 16px rgba(29, 78, 216, 0.08);
+    }
+    
+    [data-theme="dark"] {
+        --color-bg: #141d2f;
+        --color-surface: #1b2a4d;
+        --color-surface-alt: #101a33;
+        --color-text: #ffffff;
+        --color-text-muted: #8fa3c8;
+        --color-heading: #ffffff;
+        --color-primary: #0a84ff;
+        --color-primary-hover: #5aaeff;
+        --color-border: #2a3b66;
+        --color-error: #ff6b70;
+        --color-table-head: #1d4ed8;
+        --color-table-head-text: #ffffff;
+        --color-table-group: #8ea3d6;
+        --color-table-cell: #f3f6fc;
+        --color-table-text: #1b2a4a;
+        --shadow-card: none;
+    }
+    
+     :root {
+        --font-body: "Space Mono", ui-monospace, monospace;
+        --font-heading: "Inter", system-ui, sans-serif;
+        --radius: 12px;
+        --container-max: 778px;
+        /* 730px content + 2x24px padding */
+        --space: 1.5rem;
+    }
+    /* ===== RESET & BASE ===== */
+    
+    *,
+    *::before,
+    *::after {
+        box-sizing: border-box;
+    }
+    
+    body {
+        margin: 0;
+        font-family: var(--font-body);
+        font-size: 0.875rem;
+        line-height: 1.6;
+        color: var(--color-text);
+        background: var(--color-bg);
+        transition: background-color 0.2s, color 0.2s;
+    }
+    
+    img {
+        max-width: 100%;
+        display: block;
+    }
+    
+    h1,
+    h2,
+    h3 {
+        font-family: var(--font-heading);
+        line-height: 1.2;
+    }
+    
+    button,
+    input {
+        font: inherit;
+    }
+    
+     :focus-visible {
+        outline: 2px solid var(--color-primary);
+        outline-offset: 2px;
+    }
+    /* ===== LAYOUT HELPERS ===== */
+    
+    .container {
+        width: 100%;
+        max-width: var(--container-max);
+        margin-inline: auto;
+        padding-inline: var(--space);
+    }
+    
+    main>section {
+        margin-block: var(--space);
+    }
+    
+    .visually-hidden {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        clip: rect(0 0 0 0);
+        white-space: nowrap;
+    }
+    
+    .skip-link {
+        position: absolute;
+        left: 1rem;
+        top: -4rem;
+        padding: 0.5rem 1rem;
+        background: var(--color-primary);
+        color: #fff;
+        border-radius: 6px;
+    }
+    
+    .skip-link:focus {
+        top: 1rem;
+    }
+    
+    .status {
+        text-align: center;
+        color: var(--color-text-muted);
+    }
+    
+    .status--error {
+        color: var(--color-error);
+    }
+    
+    .table-wrapper {
+        overflow-x: auto;
+    }
+    /* ===== [feature/header-search] ===== */
+    
+    #search-section {
+        margin-top: 16px;
+    }
+    
+    .search-form {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 8px 8px 8px 16px;
+        background: var(--surface);
+        border-radius: 14px;
+        box-shadow: var(--shadow);
+    }
+    
+    .search-form__icon {
+        flex-shrink: 0;
+        color: var(--accent);
+    }
+    
+    .search-form__input {
+        flex: 1;
+        min-width: 0;
+        border: 0;
+        outline: 0;
+        background: transparent;
+        font-family: inherit;
+        font-size: 14px;
+        color: var(--text);
+    }
+    
+    .search-form__input::placeholder {
+        color: var(--text);
+        opacity: 0.85;
+    }
+    
+    .search-form__btn {
+        flex-shrink: 0;
+        padding: 10px 18px;
+        border: 0;
+        border-radius: 8px;
+        background: var(--accent);
+        color: var(--accent-text);
+        font-family: inherit;
+        font-size: 13px;
+        font-weight: 700;
+        cursor: pointer;
+    }
+    
+    .search-form__btn:hover {
+        filter: brightness(1.08);
+    }
+    
+    .search-form:focus-within {
+        outline: 2px solid var(--accent);
+        outline-offset: 2px;
+    }
+    /* ===== [feature/planet-card] ===== */
+    /* ===== [feature/facts-table] ===== */
+    /* ===== [feature/theme-toggle] ===== */
+    /* Replace your old header/toggle CSS with this */
+    
+    .site-header__inner {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        min-height: 48px;
+    }
+    
+    .logo {
+        display: inline-flex;
+        align-items: center;
+        text-decoration: none;
+    }
+    
+    .logo img {
+        display: block;
+        height: 38px;
+        width: auto;
+    }
+    
+    #theme-toggle {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: none;
+        border: 0;
+        padding: 0;
+        cursor: pointer;
+        color: #5b6fb0;
+        font-family: "Space Mono", monospace;
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        outline: none;
+    }
+    
+    #theme-toggle:focus-visible {
+        outline: 2px solid #0a7cff;
+        outline-offset: 4px;
+    }
+    /* ===== [feature/search-logic] ===== */
+    /* ===== [feature/footer] ===== */
+    /* ===== [feature/responsive] ===== */
