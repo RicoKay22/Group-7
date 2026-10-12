@@ -1,4 +1,4 @@
-/* ==========================================================
+ /* ==========================================================
    GROUP 7 CAPSTONE: script.js
    How the pieces talk to each other (like a radio station):
    api-fetch "broadcasts" a "planets:loaded" event once the data
@@ -71,15 +71,291 @@ loadPlanets();
 
 
 /* ===== [feature/header-search] ===== */
+// Markup and styling only (see index.html and main.css). No JavaScript needed here.
 
 
 /* ===== [feature/planet-card] ===== */
+const planetDetailsEl = document.getElementById("planet-details");
+
+// Inline SVG icons: they use currentColor, so they follow the theme
+const cardIcons = {
+    temperature: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M14 14.8V4.5a2.5 2.5 0 0 0-5 0v10.3a4.5 4.5 0 1 0 5 0z"/><path d="M19.5 4.5a1.8 1.8 0 1 1-3.6 0 1.8 1.8 0 0 1 3.6 0z" stroke-width="1.6"/></svg>',
+    moons: '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>',
+    diameter: '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9.5"/></svg>',
+    distance: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="4"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M4.9 19.1L7 17M17 7l2.1-2.1"/></svg>'
+};
+
+// Put a card in the planet details section (replace the old one if present)
+function mountPlanetCard(card) {
+    const existingCard = planetDetailsEl.querySelector("#planet-card");
+    if (existingCard) {
+        existingCard.replaceWith(card);
+    } else {
+        planetDetailsEl.appendChild(card);
+    }
+}
+
+function renderPlanetCard(planet) {
+    const card = document.createElement("article");
+    card.id = "planet-card";
+    card.className = "planet-card";
+    card.setAttribute("aria-labelledby", "planet-card-name");
+
+    // Static structure only. Data is inserted with textContent below.
+    card.innerHTML = `
+        <figure class="planet-card__figure">
+            <img class="planet-card__image" data-img width="116" height="116">
+        </figure>
+        <div class="planet-card__title">
+            <h3 id="planet-card-name" data-field="name"></h3>
+            <p class="planet-card__type" data-field="type"></p>
+        </div>
+        <p class="planet-card__description" data-field="description"></p>
+        <dl class="planet-card__stats">
+            <div><dt>Gravity</dt><dd data-field="gravity"></dd></div>
+            <div><dt>Mass</dt><dd data-field="mass"></dd></div>
+            <div><dt>Period</dt><dd data-field="period"></dd></div>
+        </dl>
+        <ul class="planet-card__facts">
+            <li>${cardIcons.temperature}<span class="visually-hidden">Temperature in kelvin: </span><span data-field="temperature"></span></li>
+            <li>${cardIcons.moons}<span class="visually-hidden">Moons: </span><span data-field="moons"></span></li>
+            <li>${cardIcons.diameter}<span class="visually-hidden">Diameter in kilometres: </span><span data-field="diameter"></span></li>
+            <li>${cardIcons.distance}<span class="visually-hidden">Distance from the Sun in million kilometres: </span><span data-field="distanceFromSun"></span></li>
+        </ul>
+    `;
+
+    card.querySelectorAll("[data-field]").forEach((el) => {
+        el.textContent = planet[el.dataset.field];
+    });
+
+    const cardImage = card.querySelector("[data-img]");
+    cardImage.src = planet.image;
+    cardImage.alt = planet.name;
+
+    mountPlanetCard(card);
+}
+
+// Show Earth by default once the data arrives
+document.addEventListener("planets:loaded", () => {
+    const earth = findPlanetByName("Earth");
+    if (earth) renderPlanetCard(earth);
+});
 
 
 /* ===== [feature/facts-table] ===== */
+const factsContainer = document.getElementById("facts-table-container");
+
+// Table groups, in display order. "type" values come from the API.
+const factsGroups = [
+    { label: "Terrestrial Planets", type: "Terrestrial" },
+    {
+        parent: "Jovian Planets",
+        subgroups: [
+            { label: "Gas Giants", type: "Gas Giant" },
+            { label: "Ice Giants", type: "Ice Giant" }
+        ]
+    },
+    { label: "Dwarf Planets", type: "Dwarf Planet" }
+];
+
+function makeFactsCell(tag, text, attrs = {}) {
+    const cell = document.createElement(tag);
+    cell.textContent = text;
+    Object.entries(attrs).forEach(([name, value]) => cell.setAttribute(name, value));
+    return cell;
+}
+
+function renderFactsTable(planetList) {
+    const table = document.createElement("table");
+    table.className = "facts-table";
+
+    const caption = document.createElement("caption");
+    caption.textContent = "Data about the planets of our solar system (Planetary facts taken from NASA)";
+    table.appendChild(caption);
+
+    // Header
+    const thead = document.createElement("thead");
+    const headRow = document.createElement("tr");
+    const groupHead = makeFactsCell("th", "", { scope: "col", colspan: "2" });
+    groupHead.innerHTML = '<span class="visually-hidden">Planet group</span>';
+    headRow.appendChild(groupHead);
+    headRow.appendChild(makeFactsCell("th", "Name", { scope: "col" }));
+    const massHead = makeFactsCell("th", "", { scope: "col" });
+    massHead.innerHTML = "Mass (10<sup>24</sup>kg)";
+    headRow.appendChild(massHead);
+    headRow.appendChild(makeFactsCell("th", "Diameter (km)", { scope: "col" }));
+    thead.appendChild(headRow);
+    table.appendChild(thead);
+
+    // Body: rows are built from the data, not hard-coded
+    const tbody = document.createElement("tbody");
+
+    function addPlanetRows(list, leadingCells) {
+        list.forEach((planet, index) => {
+            const row = document.createElement("tr");
+            if (index === 0) leadingCells.forEach((cell) => row.appendChild(cell));
+            row.appendChild(makeFactsCell("th", planet.name, { scope: "row" }));
+            row.appendChild(makeFactsCell("td", String(planet.mass)));
+            row.appendChild(makeFactsCell("td", planet.diameter.toLocaleString("en-US")));
+            tbody.appendChild(row);
+        });
+    }
+
+    factsGroups.forEach((group) => {
+        if (group.subgroups) {
+            const subgroupLists = group.subgroups.map((sub) => ({
+                sub,
+                list: planetList.filter((planet) => planet.type === sub.type)
+            })).filter((entry) => entry.list.length > 0);
+
+            const total = subgroupLists.reduce((sum, entry) => sum + entry.list.length, 0);
+            if (total === 0) return;
+
+            subgroupLists.forEach((entry, subIndex) => {
+                const leading = [];
+                if (subIndex === 0) {
+                    leading.push(makeFactsCell("th", group.parent, { scope: "rowgroup", rowspan: String(total) }));
+                }
+                leading.push(makeFactsCell("th", entry.sub.label, { scope: "rowgroup", rowspan: String(entry.list.length) }));
+                addPlanetRows(entry.list, leading);
+            });
+        } else {
+            const list = planetList.filter((planet) => planet.type === group.type);
+            if (list.length === 0) return;
+            const leading = [makeFactsCell("th", group.label, { scope: "rowgroup", colspan: "2", rowspan: String(list.length) })];
+            addPlanetRows(list, leading);
+        }
+    });
+
+    table.appendChild(tbody);
+    factsContainer.replaceChildren(table);
+}
+
+document.addEventListener("planets:loaded", (e) => renderFactsTable(e.detail));
 
 
 /* ===== [feature/theme-toggle] ===== */
+const themeIcons = {
+    moon: '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>',
+    sun: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="4" fill="currentColor"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M4.9 19.1L7 17M17 7l2.1-2.1"/></svg>'
+};
+
+function initTheme() {
+    const root = document.documentElement;
+    const toggleSlot = document.getElementById("theme-toggle-slot");
+
+    // Create the button inside the slot
+    const toggleBtn = document.createElement("button");
+    toggleBtn.id = "theme-toggle";
+    toggleBtn.type = "button";
+    toggleBtn.setAttribute("aria-pressed", "false");
+    toggleSlot.appendChild(toggleBtn);
+
+    // Helper: apply theme
+    function applyTheme(theme) {
+        root.dataset.theme = theme;
+        try {
+            localStorage.setItem("theme", theme);
+        } catch (e) {
+            console.warn("Could not save theme:", e);
+        }
+
+        if (theme === "light") {
+            toggleBtn.innerHTML = `<span>DARK</span>${themeIcons.moon}`;
+            toggleBtn.setAttribute("aria-pressed", "false");
+        } else {
+            toggleBtn.innerHTML = `<span>LIGHT</span>${themeIcons.sun}`;
+            toggleBtn.setAttribute("aria-pressed", "true");
+        }
+    }
+
+    // Load saved theme or system preference
+    let savedTheme;
+    try {
+        savedTheme = localStorage.getItem("theme");
+    } catch (e) {
+        savedTheme = null;
+    }
+
+    if (savedTheme === "light" || savedTheme === "dark") {
+        applyTheme(savedTheme);
+    } else {
+        const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+        applyTheme(prefersDark ? "dark" : "light");
+    }
+
+    // Toggle on click
+    toggleBtn.addEventListener("click", () => {
+        const newTheme = root.dataset.theme === "light" ? "dark" : "light";
+        applyTheme(newTheme);
+    });
+}
+
+// Run on page load
+document.addEventListener("DOMContentLoaded", initTheme);
 
 
 /* ===== [feature/search-logic] ===== */
+const searchForm = document.getElementById("search-form");
+const searchInput = document.getElementById("search-input");
+const searchErrorEl = document.getElementById("search-error");
+
+// Returns one planet or null. Trims, ignores case, allows partial names.
+// Order of preference: exact match, name starts with query, name contains query.
+function searchPlanets(query) {
+    const term = String(query || "").trim().toLowerCase();
+    if (!term) return null;
+
+    return (
+        planets.find((planet) => planet.name.toLowerCase() === term) ||
+        planets.find((planet) => planet.name.toLowerCase().startsWith(term)) ||
+        planets.find((planet) => planet.name.toLowerCase().includes(term)) ||
+        null
+    );
+}
+
+function renderNotFound(query) {
+    const card = document.createElement("article");
+    card.id = "planet-card";
+    card.className = "planet-card planet-card--empty";
+    card.dataset.query = query;
+    card.innerHTML = `
+        <h3>No results found!</h3>
+        <p>We couldn't find any planet matching your search. Please double-check the name and try again.</p>
+    `;
+    mountPlanetCard(card);
+}
+
+function showSearchError() {
+    searchErrorEl.hidden = false;
+    searchInput.setAttribute("aria-invalid", "true");
+}
+
+function hideSearchError() {
+    searchErrorEl.hidden = true;
+    searchInput.removeAttribute("aria-invalid");
+}
+
+if (searchForm && searchInput && searchErrorEl) {
+    searchForm.addEventListener("submit", (event) => {
+        event.preventDefault();
+
+        const query = searchInput.value;
+        if (!query.trim()) {
+            hideSearchError(); // empty search: nothing to do, nothing breaks
+            return;
+        }
+
+        const result = searchPlanets(query);
+        if (result) {
+            hideSearchError();
+            renderPlanetCard(result);
+        } else {
+            showSearchError();
+            renderNotFound(query);
+        }
+    });
+
+    // Clear the error as soon as the user types again
+    searchInput.addEventListener("input", hideSearchError);
+}

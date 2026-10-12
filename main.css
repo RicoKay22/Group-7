@@ -1,3 +1,42 @@
+
+
+ /* Light theme */
+:root[data-theme="light"] {
+  --bg-color: #ffffff;
+  --text-color: #000000;   
+  --primary-color: #0078d4;
+  --secondary-color: #f3f3f3;
+  --accent-color: #ffcc00;
+}
+
+/* Dark theme */
+:root[data-theme="dark"] {
+  --bg-color: #121212;
+  --text-color: #ffffff;
+  --primary-color: #3399ff;
+  --secondary-color: #1e1e1e;
+  --accent-color: #ffd633;
+}
+
+/* Apply variables globally */
+body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+}
+
+button {
+  background: var(--secondary-color);
+  color: var(--text-color);
+  border: 1px solid var(--primary-color);
+}
+
+a {
+  color: var(--primary-color);
+}
+
+.highlight {
+  background: var(--accent-color);
+}
 /* ===== THEME VARIABLES =====
    Colours are approximated from the Figma preview.
    Replace with exact hex values from Figma (Inspect panel). */
@@ -50,6 +89,8 @@
 
 /* ===== RESET & BASE ===== */
 *, *::before, *::after { box-sizing: border-box; }
+
+[hidden] { display: none !important; }
 
 body {
     margin: 0;
@@ -113,29 +154,364 @@ main > section { margin-block: var(--space); }
     padding-block: var(--space);
 }
 .logo {
-    font-family: var(--font-heading);
-    font-weight: 700;
-    color: var(--color-text);
+    display: inline-flex;
+    align-items: center;
     text-decoration: none;
+}
+.logo__img {
+    width: 7.5rem;
+    height: auto;
+}
+/* Black logo on light backgrounds, white logo on dark backgrounds */
+.logo__img--dark-mode { display: none; }
+[data-theme="dark"] .logo__img--light-mode { display: none; }
+[data-theme="dark"] .logo__img--dark-mode { display: block; }
+
+.search-form {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.5rem 0.5rem 0.5rem 1rem;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-card);
+    transition: box-shadow 0.15s, border-color 0.15s;
+}
+/* Input focus: blue ring around the whole bar */
+.search-form:focus-within {
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(10, 132, 255, 0.35);
+}
+.search-form__icon {
+    flex: none;
+    color: var(--color-primary);
+}
+.search-form__input {
+    flex: 1;
+    min-width: 0;
+    padding: 0.5rem 0;
+    border: 0;
+    outline: none;
+    background: transparent;
+    color: var(--color-text);
+    font-size: 0.75rem;
+}
+.search-form__input::placeholder { color: var(--color-text-muted); opacity: 1; }
+.search-form__input::-webkit-search-cancel-button { display: none; }
+
+/* Error state: red text inside the input, on the right */
+.search-form__error {
+    flex: none;
+    color: var(--color-error);
+    font-size: 0.75rem;
+    white-space: nowrap;
+}
+
+.search-form__button {
+    flex: none;
+    padding: 0.6rem 1.25rem;
+    border: 0;
+    border-radius: 8px;
+    background: var(--color-primary);
+    color: #ffffff;
+    font-family: var(--font-heading);
+    font-weight: 600;
+    font-size: 0.75rem;
+    cursor: pointer;
+    transition: background-color 0.15s;
+}
+.search-form__button:hover { background: var(--color-primary-hover); }
+.search-form__button:focus-visible {
+    outline: 2px solid var(--color-heading);
+    outline-offset: 2px;
 }
 
 
 /* ===== [feature/planet-card] ===== */
+.planet-card {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    grid-template-areas:
+        "figure title"
+        "figure desc"
+        "figure stats"
+        "figure facts";
+    column-gap: 2rem;
+    row-gap: 0.5rem;
+    align-items: start;
+    padding: 3rem;
+    background: var(--color-surface);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-card);
+}
+
+.planet-card__figure {
+    grid-area: figure;
+    margin: 0;
+    width: 7.25rem;
+    height: 7.25rem;
+}
+.planet-card__image {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.planet-card__title { grid-area: title; }
+.planet-card__title h3 {
+    margin: 0;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--color-text);
+}
+.planet-card__type {
+    margin: 0.15rem 0 0;
+    font-size: 0.75rem;
+    color: var(--color-primary);
+}
+
+.planet-card__description {
+    grid-area: desc;
+    margin: 0;
+    font-size: 0.75rem;
+    line-height: 1.7;
+    color: var(--color-text-muted);
+}
+
+.planet-card__stats {
+    grid-area: stats;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin: 0.75rem 0 0;
+    padding: 0.875rem 1.5rem;
+    background: var(--color-surface-alt);
+    border-radius: 8px;
+}
+.planet-card__stats dt {
+    font-size: 0.625rem;
+    color: var(--color-text-muted);
+}
+.planet-card__stats dd {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--color-text);
+}
+
+.planet-card__facts {
+    grid-area: facts;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem 1.5rem;
+    margin: 0.75rem 0 0;
+    padding: 0;
+    list-style: none;
+}
+.planet-card__facts li {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.6875rem;
+    color: var(--color-text-muted);
+}
+.planet-card__facts svg {
+    flex: none;
+    width: 1rem;
+    height: 1rem;
+    color: var(--color-text);
+}
+
+/* Not-found card */
+.planet-card--empty {
+    display: block;
+    padding: 2rem 3rem;
+    text-align: center;
+}
+.planet-card--empty h3 {
+    margin: 0 0 0.5rem;
+    font-size: 1.25rem;
+    color: var(--color-text);
+}
+.planet-card--empty p {
+    margin: 0;
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
+}
 
 
 /* ===== [feature/facts-table] ===== */
+#facts-section { margin-top: 2.5rem; }
+#facts-title {
+    margin: 0 0 0.75rem;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--color-heading);
+}
+#facts-section > p {
+    margin: 0 0 1.5rem;
+    font-size: 0.75rem;
+    line-height: 1.7;
+    color: var(--color-text);
+}
+[data-theme="dark"] #facts-section > p { color: var(--color-text-muted); }
+
+.facts-table {
+    --table-line: var(--color-border);
+    width: 100%;
+    min-width: 30rem;
+    border-collapse: collapse;
+    font-size: 0.75rem;
+    text-align: center;
+    color: var(--color-table-text);
+}
+[data-theme="dark"] .facts-table { --table-line: #d5deef; }
+
+.facts-table caption {
+    caption-side: top;
+    padding-bottom: 0.75rem;
+    text-align: left;
+    font-family: var(--font-heading);
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--color-text);
+}
+
+.facts-table th,
+.facts-table td {
+    padding: 0.7rem 0.5rem;
+    border: 1px solid var(--table-line);
+}
+
+.facts-table thead th {
+    background: var(--color-table-head);
+    color: var(--color-table-head-text);
+    font-family: var(--font-heading);
+    font-size: 0.6875rem;
+    font-weight: 700;
+    border-color: var(--color-table-head);
+}
+.facts-table thead th + th { border-left-color: rgba(255, 255, 255, 0.35); }
+
+.facts-table tbody th[scope="rowgroup"] {
+    background: var(--color-table-group);
+    color: var(--color-table-text);
+    font-family: var(--font-heading);
+    font-size: 0.6875rem;
+    font-weight: 700;
+}
+.facts-table tbody th[scope="row"],
+.facts-table tbody td {
+    background: var(--color-table-cell);
+    color: var(--color-table-text);
+    font-weight: 400;
+}
 
 
 /* ===== [feature/theme-toggle] ===== */
+#theme-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.35rem 0.5rem;
+    background: none;
+    border: 0;
+    border-radius: 6px;
+    font-family: var(--font-body);
+    font-size: 0.6875rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    color: var(--color-text);
+    cursor: pointer;
+    transition: color 0.15s;
+}
+#theme-toggle svg {
+    width: 1rem;
+    height: 1rem;
+    color: var(--color-primary);
+}
+#theme-toggle:hover { color: var(--color-primary); }
 
 
 /* ===== [feature/search-logic] ===== */
+/* Logic only. Styles for the search UI live in [feature/header-search]. */
 
 
 /* ===== [feature/footer] ===== */
+.site-footer { margin-top: 2.5rem; }
+.site-footer__inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    padding-block: 2rem 3rem;
+    font-size: 0.6875rem;
+    line-height: 1.7;
+    color: var(--color-text-muted);
+}
+.site-footer__title {
+    margin: 0 0 0.5rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--color-heading);
+}
+.site-footer p { margin: 0; }
+.site-footer a {
+    color: var(--color-text);
+    font-weight: 700;
+    text-decoration: none;
+}
+.site-footer a:hover { color: var(--color-primary); text-decoration: underline; }
 
 
 /* ===== [feature/responsive] ===== */
+@media (max-width: 768px) {
+    .planet-card { padding: 2rem; }
+    .planet-card--empty { padding: 2rem; }
+}
 
+@media (max-width: 480px) {
+    :root { --space: 1rem; }
+
+    #facts-title { font-size: 1.375rem; }
+
+    /* Card: image + name side by side, everything else full width */
+    .planet-card {
+        grid-template-columns: auto 1fr;
+        grid-template-areas:
+            "figure title"
+            "desc desc"
+            "stats stats"
+            "facts facts";
+        column-gap: 1rem;
+        row-gap: 0.75rem;
+        align-items: center;
+        padding: 1.25rem;
+    }
+    .planet-card__figure { width: 4.5rem; height: 4.5rem; }
+    .planet-card__title h3 { font-size: 1.125rem; }
+
+    /* Stats stack vertically: Gravity, Mass, Period */
+    .planet-card__stats {
+        grid-template-columns: 1fr;
+        gap: 0.75rem;
+        margin-top: 0;
+        padding: 1rem;
+    }
+    /* Icon rows become one column */
+    .planet-card__facts {
+        grid-template-columns: 1fr;
+        margin-top: 0;
+    }
+    .planet-card--empty { padding: 1.5rem 1.25rem; }
+
+    /* Footer stacks */
+    .site-footer__inner { grid-template-columns: 1fr; gap: 1.5rem; }
+
+    /* Search bar: a little tighter */
+    .search-form { gap: 0.5rem; padding-left: 0.75rem; }
+    .search-form__button { padding-inline: 1rem; }
+}
 
 
