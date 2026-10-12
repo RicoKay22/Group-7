@@ -1,692 +1,281 @@
-/* Light theme */
-:root[data-theme="light"] {
-  --bg-color: #ffffff;
-  --text-color: #000000;   
-  --primary-color: #0078d4;
-  --secondary-color: #f3f3f3;
-  --accent-color: #ffcc00;
-}
-
-/* Dark theme */
-:root[data-theme="dark"] {
-  --bg-color: #121212;
-  --text-color: #ffffff;
-  --primary-color: #3399ff;
-  --secondary-color: #1e1e1e;
-  --accent-color: #ffd633;
-}
-
-/* Apply variables globally */
-body {
-  background-color: var(--bg-color);
-  color: var(--text-color);
-}
-
-button {
-  background: var(--secondary-color);
-  color: var(--text-color);
-  border: 1px solid var(--primary-color);
-}
-
-a {
-  color: var(--primary-color);
-}
-
-.highlight {
-  background: var(--accent-color);
-}
-/* ===== THEME VARIABLES =====
+    /* Light theme */
+    
+     :root[data-theme="light"] {
+        --bg-color: #ffffff;
+        --text-color: #000000;
+        --primary-color: #0078d4;
+        --secondary-color: #f3f3f3;
+        --accent-color: #ffcc00;
+    }
+    /* Dark theme */
+    
+     :root[data-theme="dark"] {
+        --bg-color: #121212;
+        --text-color: #ffffff;
+        --primary-color: #3399ff;
+        --secondary-color: #1e1e1e;
+        --accent-color: #ffd633;
+    }
+    /* Apply variables globally */
+    
+    body {
+        background-color: var(--bg-color);
+        color: var(--text-color);
+    }
+    
+    button {
+        background: var(--secondary-color);
+        color: var(--text-color);
+        border: 1px solid var(--primary-color);
+    }
+    
+    a {
+        color: var(--primary-color);
+    }
+    
+    .highlight {
+        background: var(--accent-color);
+    }
+    /* ===== THEME VARIABLES =====
    Colours are approximated from the Figma preview.
    Replace with exact hex values from Figma (Inspect panel). */
-:root,
-[data-theme="light"] {
-    --color-bg:#f6f8ff;
-    --color-surface: #ffffff;
-    --color-surface-alt: #f1f5fc;
-    --color-text: #1b2a4a;
-    --color-text-muted: #7a8bad;
-    --color-heading: #1d4ed8;
-    --color-primary: #0a84ff;
-    --color-primary-hover: #5aaeff;
-    --color-border: #dbe4f5;
-    --color-error: #e5484d;
-    --color-table-head: #1d4ed8;
-    --color-table-head-text: #ffffff;
-    --color-table-group: #e4ecfb;
-    --color-table-cell: #ffffff;
-    --color-table-text: #1b2a4a;
-    --shadow-card: 0 4px 16px rgba(29, 78, 216, 0.08);
-}
-
-[data-theme="dark"] {
-    --color-bg: #141d2f;
-    --color-surface: #1b2a4d;
-    --color-surface-alt: #101a33;
-    --color-text: #ffffff;
-    --color-text-muted: #8fa3c8;
-    --color-heading: #ffffff;
-    --color-primary: #0a84ff;
-    --color-primary-hover: #5aaeff;
-    --color-border: #2a3b66;
-    --color-error: #ff6b70;
-    --color-table-head: #1d4ed8;
-    --color-table-head-text: #ffffff;
-    --color-table-group: #8ea3d6;
-    --color-table-cell: #f3f6fc;
-    --color-table-text: #1b2a4a;
-    --shadow-card: none;
-}
-
-:root {
-    --font-body: "Space Mono", ui-monospace, monospace;
-    --font-heading: "Inter", system-ui, sans-serif;
-    --radius: 12px;
-    --container-max: 778px; /* 730px content + 2x24px padding */
-    --space: 1.5rem;
-}
-
-/* ===== RESET & BASE ===== */
-*, *::before, *::after { box-sizing: border-box; }
-
-body {
-    margin: 0;
-    font-family: var(--font-body);
-    font-size: 0.875rem;
-    line-height: 1.6;
-    color: var(--color-text);
-    background: var(--color-bg);
-    transition: background-color 0.2s, color 0.2s;
-}
-
-img { max-width: 100%; display: block; }
-h1, h2, h3 { font-family: var(--font-heading); line-height: 1.2; }
-button, input { font: inherit; }
-
-:focus-visible {
-    outline: 2px solid var(--color-primary);
-    outline-offset: 2px;
-}
-
-/* ===== LAYOUT HELPERS ===== */
-.container {
-    width: 100%;
-    max-width: var(--container-max);
-    margin-inline: auto;
-    padding-inline: var(--space);
-}
-
-main > section { margin-block: var(--space); }
-
-.visually-hidden {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    overflow: hidden;
-    clip: rect(0 0 0 0);
-    white-space: nowrap;
-}
-
-.skip-link {
-    position: absolute;
-    left: 1rem;
-    top: -4rem;
-    padding: 0.5rem 1rem;
-    background: var(--color-primary);
-    color: #fff;
-    border-radius: 6px;
-}
-.skip-link:focus { top: 1rem; }
-
-.status { text-align: center; color: var(--color-text-muted); }
-.status--error { color: var(--color-error); }
-
-.table-wrapper { overflow-x: auto; }
-
-/* ===== [feature/header-search] ===== */
-.site-header__inner {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding-block: var(--space);
-}
-.logo {
-    font-family: var(--font-heading);
-    font-weight: 700;
-    color: var(--color-text);
-    text-decoration: none;
-} 
-
-/* ===== [feature/planet-card] ===== */
-.planet-card {
-    display: grid;
-    grid-template-columns: auto 1fr;
-    grid-template-areas:
-        "figure title"
-        "figure desc"
-        "figure stats"
-        "figure facts";
-    column-gap: 2rem;
-    row-gap: 0.5rem;
-    align-items: start;
-    padding: 3rem;
-    background: var(--color-surface);
-    border-radius: var(--radius);
-    box-shadow: var(--shadow-card);
-}
-
-.planet-card__figure {
-    grid-area: figure;
-    margin: 0;
-    width: 7.25rem;
-    height: 7.25rem;
-}
-.planet-card__image {
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-    object-fit: cover;
-}
-
-.planet-card__title { grid-area: title; }
-.planet-card__title h3 {
-    margin: 0;
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: var(--color-text);
-}
-.planet-card__type {
-    margin: 0.15rem 0 0;
-    font-size: 0.75rem;
-    color: var(--color-primary);
-}
-
-.planet-card__description {
-    grid-area: desc;
-    margin: 0;
-    font-size: 0.75rem;
-    line-height: 1.7;
-    color: var(--color-text-muted);
-}
-
-.planet-card__stats {
-    grid-area: stats;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1rem;
-    margin: 0.75rem 0 0;
-    padding: 0.875rem 1.5rem;
-    background: var(--color-surface-alt);
-    border-radius: 8px;
-}
-.planet-card__stats dt {
-    font-size: 0.625rem;
-    color: var(--color-text-muted);
-}
-.planet-card__stats dd {
-    margin: 0;
-    font-size: 1rem;
-    font-weight: 700;
-    color: var(--color-text);
-}
-
-.planet-card__facts {
-    grid-area: facts;
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 0.75rem 1.5rem;
-    margin: 0.75rem 0 0;
-    padding: 0;
-    list-style: none;
-}
-.planet-card__facts li {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-size: 0.6875rem;
-    color: var(--color-text-muted);
-}
-.planet-card__facts svg {
-    flex: none;
-    width: 1rem;
-    height: 1rem;
-    color: var(--color-text);
-}
-
-/* Not-found card */
-.planet-card--empty {
-    display: block;
-    padding: 2rem 3rem;
-    text-align: center;
-}
-.planet-card--empty h3 {
-    margin: 0 0 0.5rem;
-    font-size: 1.25rem;
-    color: var(--color-text);
-}
-.planet-card--empty p {
-    margin: 0;
-    font-size: 0.75rem;
-    color: var(--color-text-muted);
-}
-
-/* ===== [feature/facts-table] ===== */
-#facts-section { margin-top: 2.5rem; }
-#facts-title {
-    margin: 0 0 0.75rem;
-    font-size: 1.5rem;
-    font-weight: 600;
-    color: var(--color-heading);
-}
-#facts-section > p {
-    margin: 0 0 1.5rem;
-    font-size: 0.75rem;
-    line-height: 1.7;
-    color: var(--color-text);
-}
-[data-theme="dark"] #facts-section > p { color: var(--color-text-muted); }
-
-.facts-table {
-    --table-line: var(--color-border);
-    width: 100%;
-    min-width: 30rem;
-    border-collapse: collapse;
-    font-size: 0.75rem;
-    text-align: center;
-    color: var(--color-table-text);
-}
-[data-theme="dark"] .facts-table { --table-line: #d5deef; }
-
-.facts-table caption {
-    caption-side: top;
-    padding-bottom: 0.75rem;
-    text-align: left;
-    font-family: var(--font-heading);
-    font-size: 0.75rem;
-    font-weight: 700;
-    color: var(--color-text);
-}
-
-.facts-table th,
-.facts-table td {
-    padding: 0.7rem 0.5rem;
-    border: 1px solid var(--table-line);
-}
-
-.facts-table thead th {
-    background: var(--color-table-head);
-    color: var(--color-table-head-text);
-    font-family: var(--font-heading);
-    font-size: 0.6875rem;
-    font-weight: 700;
-    border-color: var(--color-table-head);
-}
-.facts-table thead th + th { border-left-color: rgba(255, 255, 255, 0.35); }
-
-.facts-table tbody th[scope="rowgroup"] {
-    background: var(--color-table-group);
-    color: var(--color-table-text);
-    font-family: var(--font-heading);
-    font-size: 0.6875rem;
-    font-weight: 700;
-}
-.facts-table tbody th[scope="row"],
-.facts-table tbody td {
-    background: var(--color-table-cell);
-    color: var(--color-table-text);
-    font-weight: 400;
-}
-
-
-/* ===== [feature/theme-toggle] ===== */
-
-
-/* ===== [feature/search-logic] ===== */
-
-
-/* ===== [feature/footer] ===== */
-
-.site-footer {
-  width: 100%;
-  padding: 2rem 1.5rem;
-  background-color: var(--color-bg);
-  color: var(--color-text);
-  border-top: 1px solid var(--color-border);
-}
-
-.footer-container {
-  max-width: 1200px;
-  margin: 0 auto;
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: 2rem;
-}
-
-.footer-about {
-  max-width: 400px;
-}
-
-.footer-about h3 {
-  margin: 0 0 0.5rem;
-  font-size: 1.125rem;
-  font-weight: 700;
-  line-height: 1.2;
-}
-
-.footer-about p {
-  margin: 0;
-  font-size: 0.875rem;
-  line-height: 1.5;
-  color: var(--color-text-muted);
-}
-
-.footer-links {
-  display: flex;
-  flex-direction: column;
-  margin-top: 0.15rem;
-  font-size: 0.875rem;
-  text-align: right;
-}
-
-.footer-links p {
-  margin: 0;
-  line-height: 1.35;
-}
-
-.footer-links a {
-  color: inherit;
-  font-weight: 600;
-  text-decoration: underline;
-  transition: opacity 0.2s ease;
-}
-
-.footer-links a:hover,
-.footer-links a:focus-visible {
-  opacity: 0.75;
-}
-
-@media (max-width: 768px) {
-  .footer-container {
-    flex-direction: column;
-    gap: 1.5rem;
-  }
-
-  .footer-links {
-    margin-top: 0;
-    text-align: left;
-  }
-}
-
-/* ===== [feature/responsive] ===== */
-
-/* Prevent padding and borders from making elements wider */
-*,
-*::before,
-*::after {
-    box-sizing: border-box;
-}
-
-/* Prevent children from forcing their containers wider */
-.container,
-main,
-main > section,
-#planet-details,
-#facts-section,
-.table-wrapper {
-    min-width: 0;
-    max-width: 100%;
-}
-
-/* Keep images inside their containers */
-img {
-    max-width: 100%;
-    height: auto;
-}
-
-/* Keep the facts table scrollable within its own wrapper */
-.table-wrapper {
-    display: block;
-    width: 100%;
-    overflow-x: auto;
-    overflow-y: hidden;
-    -webkit-overflow-scrolling: touch;
-}
-
-.facts-table {
-    width: 100%;
-    min-width: 30rem;
-}
-
-/* TABLETS: 768px and below */
-@media (max-width: 768px) {
+    
+     :root,
+    [data-theme="light"] {
+        --color-bg: #f6f8ff;
+        --color-surface: #ffffff;
+        --color-surface-alt: #f1f5fc;
+        --color-text: #1b2a4a;
+        --color-text-muted: #7a8bad;
+        --color-heading: #1d4ed8;
+        --color-primary: #0a84ff;
+        --color-primary-hover: #5aaeff;
+        --color-border: #dbe4f5;
+        --color-error: #e5484d;
+        --color-table-head: #1d4ed8;
+        --color-table-head-text: #ffffff;
+        --color-table-group: #e4ecfb;
+        --color-table-cell: #ffffff;
+        --color-table-text: #1b2a4a;
+        --shadow-card: 0 4px 16px rgba(29, 78, 216, 0.08);
+    }
+    
+    [data-theme="dark"] {
+        --color-bg: #141d2f;
+        --color-surface: #1b2a4d;
+        --color-surface-alt: #101a33;
+        --color-text: #ffffff;
+        --color-text-muted: #8fa3c8;
+        --color-heading: #ffffff;
+        --color-primary: #0a84ff;
+        --color-primary-hover: #5aaeff;
+        --color-border: #2a3b66;
+        --color-error: #ff6b70;
+        --color-table-head: #1d4ed8;
+        --color-table-head-text: #ffffff;
+        --color-table-group: #8ea3d6;
+        --color-table-cell: #f3f6fc;
+        --color-table-text: #1b2a4a;
+        --shadow-card: none;
+    }
+    
+     :root {
+        --font-body: "Space Mono", ui-monospace, monospace;
+        --font-heading: "Inter", system-ui, sans-serif;
+        --radius: 12px;
+        --container-max: 778px;
+        /* 730px content + 2x24px padding */
+        --space: 1.5rem;
+    }
+    /* ===== RESET & BASE ===== */
+    
+    *,
+    *::before,
+    *::after {
+        box-sizing: border-box;
+    }
+    
+    body {
+        margin: 0;
+        font-family: var(--font-body);
+        font-size: 0.875rem;
+        line-height: 1.6;
+        color: var(--color-text);
+        background: var(--color-bg);
+        transition: background-color 0.2s, color 0.2s;
+    }
+    
+    img {
+        max-width: 100%;
+        display: block;
+    }
+    
+    h1,
+    h2,
+    h3 {
+        font-family: var(--font-heading);
+        line-height: 1.2;
+    }
+    
+    button,
+    input {
+        font: inherit;
+    }
+    
+     :focus-visible {
+        outline: 2px solid var(--color-primary);
+        outline-offset: 2px;
+    }
+    /* ===== LAYOUT HELPERS ===== */
+    
     .container {
         width: 100%;
-        max-width: 100%;
-        padding-left: 1.25rem;
-        padding-right: 1.25rem;
+        max-width: var(--container-max);
+        margin-inline: auto;
+        padding-inline: var(--space);
     }
-
-    /* Make the planet card fill the available width */
-    .planet-card {
-        width: 100%;
-        max-width: 100%;
-        min-width: 0;
-        grid-template-columns: 6rem minmax(0, 1fr);
-        column-gap: 1.25rem;
-        padding: 1.5rem;
+    
+    main>section {
+        margin-block: var(--space);
     }
-
-    .planet-card__figure {
-        width: 6rem;
-        height: 6rem;
+    
+    .visually-hidden {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        clip: rect(0 0 0 0);
+        white-space: nowrap;
     }
-
-    /* Keep the three statistics inside the card */
-    .planet-card__stats {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-        gap: 0.75rem;
-        padding: 0.875rem;
+    
+    .skip-link {
+        position: absolute;
+        left: 1rem;
+        top: -4rem;
+        padding: 0.5rem 1rem;
+        background: var(--color-primary);
+        color: #fff;
+        border-radius: 6px;
     }
-
-    .planet-card__stats dd {
-        overflow-wrap: anywhere;
+    
+    .skip-link:focus {
+        top: 1rem;
     }
-
-    /* Keep the planet fact rows inside the card */
-    .planet-card__facts {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        column-gap: 1rem;
+    
+    .status {
+        text-align: center;
+        color: var(--color-text-muted);
     }
-
-    .planet-card__facts li {
-        min-width: 0;
-        overflow-wrap: anywhere;
+    
+    .status--error {
+        color: var(--color-error);
     }
-
-    /* Allow the footer to stack on smaller screens */
-    .footer-container {
-        width: 100%;
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 1.5rem;
-    }
-
-    .footer-about,
-    .footer-links {
-        width: 100%;
-        max-width: 100%;
-        text-align: left;
-    }
-}
-
-/* MOBILE PHONES: 480px and below */
-@media (max-width: 480px) {
-    .container {
-        padding-left: 1rem;
-        padding-right: 1rem;
-    }
-
-    .site-header__inner {
-        flex-wrap: wrap;
-        gap: 0.75rem;
-    }
-
-    /* Stack the planet card content vertically */
-    .planet-card {
-        display: grid;
-        grid-template-columns: minmax(0, 1fr);
-        grid-template-areas:
-            "figure"
-            "title"
-            "desc"
-            "stats"
-            "facts";
-        gap: 1rem;
-        padding: 1.25rem;
-    }
-
-    .planet-card__figure {
-        justify-self: center;
-        width: 7rem;
-        height: 7rem;
-    }
-
-    .planet-card__title,
-    .planet-card__description,
-    .planet-card__stats,
-    .planet-card__facts {
-        width: 100%;
-        min-width: 0;
-    }
-
-    .planet-card__title h3 {
-        font-size: 1.25rem;
-        overflow-wrap: anywhere;
-    }
-
-    /* Stack Gravity, Mass and Period vertically */
-    .planet-card__stats {
-        display: grid;
-        grid-template-columns: minmax(0, 1fr);
-        gap: 0.75rem;
-        margin-top: 0;
-        padding: 1rem;
-    }
-
-    .planet-card__stats > div {
-        width: 100%;
-        min-width: 0;
-        padding-bottom: 0.5rem;
-        border-bottom: 1px solid var(--color-border);
-    }
-
-    .planet-card__stats > div:last-child {
-        padding-bottom: 0;
-        border-bottom: 0;
-    }
-
-    /* Display icon/statistic rows in one column */
-    .planet-card__facts {
-        display: grid;
-        grid-template-columns: minmax(0, 1fr);
-        gap: 0.875rem;
-        margin-top: 0;
-    }
-
-    .planet-card__facts li {
-        display: flex;
-        align-items: center;
-        gap: 0.625rem;
-        min-width: 0;
-        overflow-wrap: anywhere;
-    }
-
-    .planet-card__facts svg {
-        flex-shrink: 0;
-    }
-
-    /* Make the facts heading fit smaller screens */
-    #facts-section {
-        margin-top: 2rem;
-    }
-
-    #facts-title {
-        font-size: 1.25rem;
-        overflow-wrap: anywhere;
-    }
-
-    #facts-section > p {
-        overflow-wrap: anywhere;
-    }
-
-    /* Preserve table readability; scroll only inside its wrapper */
+    
     .table-wrapper {
-        width: 100%;
-        max-width: 100%;
         overflow-x: auto;
     }
-
-    .facts-table {
-        width: 100%;
-        min-width: 30rem;
-        font-size: 0.6875rem;
+    /* ===== [feature/header-search] ===== */
+    
+    #search-section {
+        margin-top: 16px;
     }
-
-    .facts-table th,
-    .facts-table td {
-        padding: 0.55rem 0.4rem;
+    
+    .search-form {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 8px 8px 8px 16px;
+        background: var(--surface);
+        border-radius: 14px;
+        box-shadow: var(--shadow);
     }
-
-    .facts-table caption {
-        overflow-wrap: anywhere;
+    
+    .search-form__icon {
+        flex-shrink: 0;
+        color: var(--accent);
     }
-
-    /* Stack footer sections and keep text readable */
-    .site-footer {
-        padding: 1.5rem 1rem;
+    
+    .search-form__input {
+        flex: 1;
+        min-width: 0;
+        border: 0;
+        outline: 0;
+        background: transparent;
+        font-family: inherit;
+        font-size: 14px;
+        color: var(--text);
     }
-
-    .footer-container {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 1.5rem;
+    
+    .search-form__input::placeholder {
+        color: var(--text);
+        opacity: 0.85;
     }
-
-    .footer-about,
-    .footer-links {
-        width: 100%;
-        max-width: 100%;
-        text-align: left;
-        overflow-wrap: anywhere;
+    
+    .search-form__btn {
+        flex-shrink: 0;
+        padding: 10px 18px;
+        border: 0;
+        border-radius: 8px;
+        background: var(--accent);
+        color: var(--accent-text);
+        font-family: inherit;
+        font-size: 13px;
+        font-weight: 700;
+        cursor: pointer;
     }
-
-    .footer-links p {
-        overflow-wrap: anywhere;
+    
+    .search-form__btn:hover {
+        filter: brightness(1.08);
     }
-}
-
-/* VERY SMALL PHONES: 360px and below */
-@media (max-width: 360px) {
-    .container {
-        padding-left: 0.75rem;
-        padding-right: 0.75rem;
+    
+    .search-form:focus-within {
+        outline: 2px solid var(--accent);
+        outline-offset: 2px;
     }
-
-    .planet-card {
-        padding: 1rem;
+    /* ===== [feature/planet-card] ===== */
+    /* ===== [feature/facts-table] ===== */
+    /* ===== [feature/theme-toggle] ===== */
+    /* Replace your old header/toggle CSS with this */
+    
+    .site-header__inner {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        min-height: 48px;
     }
-
-    .planet-card__stats {
-        padding: 0.75rem;
+    
+    .logo {
+        display: inline-flex;
+        align-items: center;
+        text-decoration: none;
     }
-
-    #facts-title {
-        font-size: 1.125rem;
+    
+    .logo img {
+        display: block;
+        height: 38px;
+        width: auto;
     }
-
-    .site-footer {
-        padding: 1.25rem 0.75rem;
+    
+    #theme-toggle {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: none;
+        border: 0;
+        padding: 0;
+        cursor: pointer;
+        color: #5b6fb0;
+        font-family: "Space Mono", monospace;
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        outline: none;
     }
-}
-
-
+    
+    #theme-toggle:focus-visible {
+        outline: 2px solid #0a7cff;
+        outline-offset: 4px;
+    }
+    /* ===== [feature/search-logic] ===== */
+    /* ===== [feature/footer] ===== */
+    /* ===== [feature/responsive] ===== */
